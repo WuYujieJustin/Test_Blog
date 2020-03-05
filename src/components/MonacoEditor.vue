@@ -8,10 +8,13 @@
 <script>
 import * as monaco from 'monaco-editor'
 export default {
-    name: 'ListCard',
+    name: 'MonacoEditor',
     props: {
         card: {
             type: Object
+        },
+        editorContent: {
+            type: String
         }
     },
     data() {
@@ -30,7 +33,7 @@ export default {
             this.editor = monaco.editor.create(
                 document.getElementById('editor'),
                 {
-                    value: `const foo = 0;`,
+                    value: this.editorContent,
                     language: 'javascript',
                     theme: 'vs-dark'
                 }
