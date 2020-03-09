@@ -3,6 +3,7 @@
         <markdown
             :toolbars="toolbars"
             theme="dark"
+            :value="value"
             @on-save="handleOnSave"
         ></markdown>
     </div>
@@ -14,6 +15,11 @@ export default {
     name: 'MarkDown',
     components: {
         Markdown
+    },
+    props: {
+        value: {
+            type: String
+        }
     },
     data() {
         return {
