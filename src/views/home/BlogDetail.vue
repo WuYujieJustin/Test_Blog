@@ -1,6 +1,5 @@
 <template>
     <div>
-        详情页
         {{ content }}
     </div>
 </template>
@@ -8,6 +7,7 @@
 <script>
 import api from 'api/blog'
 export default {
+    name: 'BlogDetail',
     computed: {
         path() {
             return this.$route.query.path
@@ -25,7 +25,7 @@ export default {
         getBlogDetail() {
             api.getBlogDetail(this.path).then(res => {
                 console.log(res)
-                this.content = res
+                this.content = window.atob(res.content)
             })
         }
     }

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import BLOGLIST from 'constant/localKey'
+import { BLOGLIST } from 'constant/localKey'
 import api from 'api/blog'
 
 export default {

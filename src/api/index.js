@@ -32,7 +32,6 @@ api.interceptors.response.use(
         //     let json = { data: { message: '服务器错误' } }
         //     return Promise.reject(json)
         //   }
-
         return Promise.reject(error.response.data)
     }
 )
