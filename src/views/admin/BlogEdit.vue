@@ -1,7 +1,5 @@
 <template>
     <div class="admin-page">
-        <button @click="download">download</button>
-        <blog-list :isCanedit="true" />
         <mark-down @on-content-save="save" v-model="content"></mark-down>
     </div>
 </template>
@@ -16,19 +14,25 @@ export default {
             content: '# test'
         }
     },
+    computed: {
+        path() {
+            return this.$route.query.path
+        }
+    },
     created() {
-        this.download()
+        this.getBlogDetail()
     },
     methods: {
         save(value) {
             // this.content = value.html
             console.log(value)
         },
-        download() {
-            api.getBlogDetail('README.md').then(res => {
-                console.log(res)
-                this.content = this.base2str(res.content)
-            })
+        getBlogDetail() {
+            if (this.path) {
+                api.getBlogDetail(this.path).then(res => {
+                    this.content = this.base2str(res.content)
+                })
+            }
         }
     }
 }

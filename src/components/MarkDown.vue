@@ -59,7 +59,7 @@ export default {
     methods: {
         handleOnSave(value) {
             console.log(value)
-            this.$emit('on-contetn-save', value)
+            this.$emit('on-content-save', value)
         }
     }
 }

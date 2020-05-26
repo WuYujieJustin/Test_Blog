@@ -19,7 +19,6 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     console.log('to', to)
     console.log('from', from)
-    console.log('router', router.app.$options.store)
     next()
 })
 

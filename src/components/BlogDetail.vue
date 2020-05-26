@@ -1,12 +1,13 @@
 <template>
     <div>
-        <blog-detail />
+        {{ content }}
     </div>
 </template>
 
 <script>
 import api from 'api/blog'
 export default {
+    name: 'BlogDetail',
     computed: {
         path() {
             return this.$route.query.path
@@ -14,15 +15,11 @@ export default {
     },
     data() {
         return {
-            content: '',
-            show: false
+            content: ''
         }
     },
     created() {
-        // this.getBlogDetail()
-        // this.$nextTick(() => {
-        // this.$refs.blog.getBlogDetail()
-        // })
+        this.getBlogDetail()
     },
     methods: {
         getBlogDetail() {

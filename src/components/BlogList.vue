@@ -1,14 +1,19 @@
 <template>
-    <blog-list :isCanedit="false" />
-    <!-- <div>
+    <div>
+        <!-- <button @click="download">download</button> -->
         <div
             @click="toDetail(blog)"
             v-for="(blog, index) in blogList"
             :key="index"
         >
             {{ blog.title }}
+            <div class="operate-btns" v-if="isCanedit">
+                <button @click="editBlog(blog.path)">修改</button>
+                <button @click="editBlog(null)">新建</button>
+                <button @click="deleteBlog">删除</button>
+            </div>
         </div>
-    </div> -->
+    </div>
 </template>
 
 <script>
@@ -16,6 +21,13 @@ import { BLOGLIST } from 'constant/localKey'
 import api from 'api/blog'
 
 export default {
+    name: 'BlogList',
+    prop: {
+        isCanEdit: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
             content: '',
@@ -23,7 +35,7 @@ export default {
         }
     },
     created() {
-        // this.getBlogList()
+        this.getBlogList()
     },
     methods: {
         getBlogList() {
@@ -39,16 +51,19 @@ export default {
                 localStorage.setItem(BLOGLIST, JSON.stringify(this.blogList))
             })
         },
-        toDetail(blog) {
-            this.$router.push({
-                name: 'BlogDetail',
-                query: { path: blog.path, sha: blog.sha }
-            })
+        editBlog(path) {
+            this.$router.push({ name: 'BlogEdit', query: { path } })
         },
-        download() {
-            api.getBlogDetail('README.md').then(res => {
-                this.content = res.content
-            })
+        deleteBlog() {
+            console.log('delete')
+        },
+        toDetail(blog) {
+            if (!this.isCanEdit) {
+                this.$router.push({
+                    name: 'BlogDetail',
+                    query: { path: blog.path, sha: blog.sha }
+                })
+            }
         }
     }
 }

@@ -8,6 +8,13 @@ context.keys().forEach(component => {
     /**
      * 兼容 import export 和 require module.export 两种规范
      */
-    const ctrl = componentConfig.default || componentConfig
-    Vue.component(ctrl.name, ctrl)
+    const ctx = componentConfig.default || componentConfig
+    // const content = () => ({
+    //     component: () => import(component),
+    //     loading: () => import('./Loading.vue'),
+    //     error: () => import('./Loading.vue'),
+    //     delay: 100,
+    //     timeout: 3000
+    // })
+    Vue.component(ctx.name, ctx)
 })

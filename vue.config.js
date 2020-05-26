@@ -28,7 +28,7 @@ module.exports = {
             .set('mixins', resolve('src/mixins'))
             //   公用的vue页面
             .set('views', resolve('src/view'))
-            // .set('plugins', resolve('src/plugins'))
+        // .set('plugins', resolve('src/plugins'))
     },
     configureWebpack: config => {
         config.plugins.push(new MonacoWebpackPlugin())
