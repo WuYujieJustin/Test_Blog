@@ -1,8 +1,8 @@
 <template>
     <div class="admin-page">
-        <button @click="download">download</button>
-        <blog-list :isCanedit="true" />
-        <mark-down @on-content-save="save" v-model="content"></mark-down>
+        <!-- <button @click="download">download</button> -->
+        <blog-list :isCanEdit="true" />
+        <!-- <mark-down @on-content-save="save" v-model="content"></mark-down> -->
     </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
         }
     },
     created() {
-        this.download()
+        // this.download()
     },
     methods: {
         save(value) {

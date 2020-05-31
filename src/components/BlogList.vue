@@ -7,10 +7,10 @@
             :key="index"
         >
             {{ blog.title }}
-            <div class="operate-btns" v-if="isCanedit">
+            <div class="operate-btns" v-if="isCanEdit">
                 <button @click="editBlog(blog.path)">修改</button>
                 <button @click="editBlog(null)">新建</button>
-                <button @click="deleteBlog">删除</button>
+                <button @click="deleteBlog(blog)">删除</button>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@ import api from 'api/blog'
 
 export default {
     name: 'BlogList',
-    prop: {
+    props: {
         isCanEdit: {
             type: Boolean,
             default: false
@@ -39,23 +39,46 @@ export default {
     },
     methods: {
         getBlogList() {
-            api.getBlogList().then(res => {
-                res.reverse().forEach(blog => {
-                    this.blogList.push({
-                        title: blog.name,
-                        path: blog.path,
-                        url: blog.html_url,
-                        sha: blog.sha
+            if (localStorage.getItem(BLOGLIST)) {
+                this.blogList = JSON.parse(localStorage.getItem(BLOGLIST))
+            } else {
+                api.getBlogList().then(res => {
+                    res.reverse().forEach(blog => {
+                        this.blogList.push({
+                            title: blog.name,
+                            path: blog.path,
+                            url: blog.html_url,
+                            sha: blog.sha
+                        })
                     })
+                    localStorage.setItem(
+                        BLOGLIST,
+                        JSON.stringify(this.blogList)
+                    )
                 })
-                localStorage.setItem(BLOGLIST, JSON.stringify(this.blogList))
-            })
+            }
         },
         editBlog(path) {
             this.$router.push({ name: 'BlogEdit', query: { path } })
         },
-        deleteBlog() {
-            console.log('delete')
+        deleteBlog(blog) {
+            const path = blog.path
+            const data = {
+                message: 'delete',
+                sha: blog.sha
+                // committer: {
+                //     name: 'Justin',
+                //     email: ''
+                // }
+            }
+            console.log(path, data)
+            api.deleteBlog(path, data)
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
         toDetail(blog) {
             if (!this.isCanEdit) {

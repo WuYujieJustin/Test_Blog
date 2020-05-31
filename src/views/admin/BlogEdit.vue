@@ -1,6 +1,12 @@
 <template>
     <div class="admin-page">
-        <mark-down @on-content-save="save" v-model="content"></mark-down>
+        <input v-if="path" v-model="name" type="text" />
+        <mark-down
+            ref="markdown"
+            @on-content-save="save"
+            v-model="content"
+        ></mark-down>
+        <button v-if="path" @click="createBlog">保存</button>
     </div>
 </template>
 
@@ -11,7 +17,8 @@ export default {
     mixins: [formatTransformer],
     data() {
         return {
-            content: '# test'
+            content: '',
+            name: ''
         }
     },
     computed: {
@@ -23,14 +30,20 @@ export default {
         this.getBlogDetail()
     },
     methods: {
+        createBlog() {
+            console.log(this.name, this.content)
+        },
         save(value) {
             // this.content = value.html
             console.log(value)
+            this.content = value.value
         },
         getBlogDetail() {
             if (this.path) {
                 api.getBlogDetail(this.path).then(res => {
+                    console.log(res)
                     this.content = this.base2str(res.content)
+                    this.name = 1
                 })
             }
         }

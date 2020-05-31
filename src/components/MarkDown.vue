@@ -2,9 +2,11 @@
     <div class="mark-down">
         <markdown
             :toolbars="toolbars"
-            theme="dark"
+            :theme="theme"
             :value="value"
+            autoSave
             @on-save="handleOnSave"
+            :interval="interval"
         ></markdown>
     </div>
 </template>
@@ -53,21 +55,17 @@ export default {
                 importmd: true,
                 save: true,
                 clear: true
-            }
+            },
+            theme: 'github',
+            interval: 3000
         }
     },
     methods: {
         handleOnSave(value) {
-            console.log(value)
             this.$emit('on-content-save', value)
         }
     }
 }
 </script>
 
-<style lang="scss" scoped>
-.mark-down {
-    width: 1000px;
-    height: 1000px;
-}
-</style>
+<style lang="scss" scoped></style>
